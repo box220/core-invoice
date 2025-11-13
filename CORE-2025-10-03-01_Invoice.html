@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice CORE-2025-10-03-01</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            color: #1a1a1a;
+            line-height: 1.4;
+            background: white;
+            padding: 0;
+            margin: 0;
+            min-height: 297mm;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .invoice-container {
+            max-width: 100%;
+            margin: 0;
+            background: white;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+            color: white;
+            padding: 20px 35px 18px;
+            position: relative;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .company-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .company-tagline {
+            font-size: 11px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .invoice-title {
+            font-size: 28px;
+            font-weight: 200;
+            margin-top: 12px;
+            letter-spacing: -1px;
+        }
+        
+        .content {
+            padding: 20px 35px;
+            flex: 1;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 18px;
+        }
+        
+        .info-section h3 {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #86868b;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .info-section p {
+            font-size: 11px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+        
+        .info-section strong {
+            font-weight: 600;
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #0066cc;
+        }
+        
+        .invoice-details {
+            background: #f5f5f7;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #e5e5e7;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-size: 11px;
+            color: #86868b;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            font-size: 11px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .services-table {
+            width: 100%;
+            margin: 16px 0;
+            border-collapse: collapse;
+        }
+        
+        .services-table thead {
+            background: #f5f5f7;
+        }
+        
+        .services-table th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #86868b;
+            font-weight: 600;
+        }
+        
+        .services-table td {
+            padding: 14px 14px;
+            font-size: 12px;
+            border-bottom: 1px solid #e5e5e7;
+        }
+        
+        .services-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .total-section {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 2px solid #e5e5e7;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 14px;
+            font-size: 12px;
+        }
+        
+        .total-row.grand-total {
+            background: #0066cc;
+            color: white;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .payment-info {
+            background: #f5f5f7;
+            padding: 14px 20px;
+            border-radius: 6px;
+            margin-top: 16px;
+        }
+        
+        .payment-info h3 {
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .payment-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .payment-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #86868b;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .payment-value {
+            font-size: 12px;
+            color: #1a1a1a;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+        }
+        
+        .reverse-charge-text {
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: #fff3e0;
+            border-left: 3px solid #ff9800;
+            border-radius: 4px;
+            font-size: 10px;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .footer {
+            background: #f5f5f7;
+            padding: 14px 35px;
+            text-align: center;
+            color: #86868b;
+            font-size: 10px;
+            border-top: 1px solid #e5e5e7;
+        }
+        
+        .footer-note {
+            margin-top: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            font-style: italic;
+            font-size: 9px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .invoice-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <div class="header-content">
+                <div class="company-logo">MB Core vienas</div>
+                <div class="company-tagline">Enterprise Transformation & Consulting</div>
+                <div class="invoice-title">INVOICE</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="info-grid">
+                <div class="info-section">
+                    <h3>From</h3>
+                    <strong>MB Core vienas</strong>
+                    <p>
+                        Gedimino pr. 27 - 2/1, LT-01104 Vilnius, Lithuania<br>
+                        Company Code: 307316648 | VAT: LT100018884619<br>
+                        Email: hello@coreone.io | Tel: +370 673 70655
+                    </p>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Bill To</h3>
+                    <strong>SOPHARMA TRADING AD</strong>
+                    <p>
+                        5 Lachezar Stanchev Str., Sopharma Business Towers,<br>
+                        Building A, Floor 12, Izgrev district, Sofia, Bulgaria<br>
+                        UIC: 103267194 | VAT: BG131473733
+                    </p>
+                </div>
+            </div>
+            
+            <div class="invoice-details">
+                <div class="detail-row">
+                    <span class="detail-label">Invoice Number</span>
+                    <span class="detail-value">CORE-2025-10-03-01</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Invoice Date</span>
+                    <span class="detail-value">November 3, 2025</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Service Period</span>
+                    <span class="detail-value">October 3, 2025 – November 3, 2025</span>
+                </div>
+            </div>
+            
+            <table class="services-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Qty</th>
+                        <th class="text-right">Amount (EUR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Consulting Services – Monthly Fixed Fee</strong><br>
+                            <span style="font-size: 11px; color: #86868b;">Under Agreement dated October 3, 2025</span>
+                        </td>
+                        <td class="text-right">1</td>
+                        <td class="text-right">€5,231.25</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="total-section">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>€5,231.25</span>
+                </div>
+                <div class="total-row">
+                    <span>VAT Rate</span>
+                    <span>0% (Reverse charge)</span>
+                </div>
+                <div class="total-row">
+                    <span>VAT Amount</span>
+                    <span>€0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Total Amount Due</span>
+                    <span>€5,231.25</span>
+                </div>
+            </div>
+            
+            <div class="reverse-charge-text">
+                <strong>Reverse charge.</strong> VAT to be accounted for by the recipient under Article 44 of Council Directive 2006/112/EC and Article 13 of the Lithuanian VAT Law. Customer VAT: BG131473733
+            </div>
+            
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <div class="payment-grid">
+                    <div class="payment-item">
+                        <span class="payment-label">Bank Name</span>
+                        <span class="payment-value">Swedbank, AB</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">Currency</span>
+                        <span class="payment-value">EUR</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">IBAN</span>
+                        <span class="payment-value">LT72 7300 0101 9632 6954</span>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">SWIFT/BIC</span>
+                        <span class="payment-value">HABALT22</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Thank you for your business</p>
+            <div class="footer-note">
+                Payment due within 10 business days from invoice receipt. Please include invoice number <strong>CORE-2025-10-03-01</strong> in payment reference.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
