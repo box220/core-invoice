@@ -9,11 +9,12 @@ interface InvoicePreviewProps {
 
 export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF = false }) => {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('de-DE', {
       style: 'currency',
       currency: invoice.payment.currency,
-      minimumFractionDigits: 2
-    }).format(amount).replace('EUR', '€').replace('USD', '$');
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
   };
 
   const formatDate = (dateString: string) => {
@@ -50,6 +51,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           background: white;
           padding: 0;
           margin: 0;
+          min-height: 297mm;
           display: flex;
           flex-direction: column;
         }
@@ -59,6 +61,19 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           color: white;
           padding: 20px 35px 18px;
           position: relative;
+          overflow: hidden;
+        }
+
+        .header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          right: -10%;
+          width: 400px;
+          height: 400px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 50%;
+          z-index: 0;
         }
 
         .header-content {
@@ -266,6 +281,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           color: #86868b;
           font-size: 10px;
           border-top: 1px solid #e5e5e7;
+          margin-top: auto;
         }
 
         .footer-note {
@@ -278,6 +294,11 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
         }
 
         @media print {
+          body {
+            background: white;
+            padding: 0;
+          }
+
           .invoice-container {
             box-shadow: none;
             border-radius: 0;
@@ -310,7 +331,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
             <strong>{invoice.client.name}</strong>
             <p>
               {invoice.client.address},<br />
-              {buildingFloorText && <>{buildingFloorText},<br /></>}
+              {buildingFloorText && <>{buildingFloorText}, </>}
               {invoice.client.city}, {invoice.client.country}<br />
               UIC: {invoice.client.uic} | VAT: {invoice.client.vatNumber}
             </p>
