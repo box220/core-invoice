@@ -19,6 +19,34 @@ Professional invoice generation web application with PDF export, template manage
 - **Reverse Charge Support**: Built-in VAT reverse charge mechanism
 - **Auto-numbering**: Automatic invoice number generation (CORE-YYYY-MM-DD-NN format)
 
+### Phase 2 (Templates & Logging) - ✅ Completed
+
+- **Template Management**: Save and reuse invoice configurations
+  - Create templates from current invoice
+  - Template library with search
+  - Load templates with auto-numbering
+  - Edit and delete templates
+  - Duplicate templates
+- **Advanced Logging System**:
+  - Multiple log levels (DEBUG, INFO, WARN, ERROR)
+  - Persistent storage in localStorage
+  - User action tracking
+  - Performance monitoring
+  - Error tracking with stack traces
+  - Export logs to JSON
+  - Search and filter capabilities
+  - Log statistics and analytics
+- **Log Viewer UI**: Built-in log viewer with:
+  - Real-time log display
+  - Search by keyword
+  - Filter by level and category
+  - Statistics dashboard
+  - Export functionality
+- **Claude Code Agents**: Intelligent slash commands for:
+  - `/analyze-logs` - Analyze logs for errors and patterns
+  - `/update-docs` - Auto-update documentation based on changes
+  - `/debug-issue` - Debug and fix issues found in logs
+
 ## Tech Stack 🛠️
 
 - **React 18** with TypeScript
@@ -52,12 +80,54 @@ npm run preview
 
 ## Usage 📝
 
-1. **Edit Invoice Data**: Use the tabbed editor on the left to modify all invoice fields
+### Basic Operations
+
+1. **Edit Invoice Data**: Use the tabbed editor to modify all invoice fields
 2. **Preview**: See real-time preview on the right side
 3. **Generate PDF**: Click "Download PDF" to export as A4-sized PDF
 4. **New Invoice Number**: Click "New Invoice #" to generate a new sequential invoice number
 5. **Export Data**: Save all templates and invoices as JSON
 6. **Import Data**: Load previously exported data
+
+### Template Management
+
+1. **Save as Template**: Click "Save as Template" button to save current invoice configuration
+2. **Browse Templates**: Switch to "Templates" tab to view all saved templates
+3. **Use Template**: Click "Use Template" on any template card to create new invoice
+4. **Edit Template**: Click edit icon to modify template details
+5. **Duplicate Template**: Click duplicate icon to create a copy
+6. **Delete Template**: Click delete icon to remove template
+
+### System Logs
+
+1. **View Logs**: Switch to "System Logs" tab to view all application logs
+2. **Search Logs**: Use search bar to find specific logs by keyword
+3. **Filter Logs**: Filter by log level (ERROR, WARN, INFO, DEBUG) or category
+4. **View Statistics**: Click "Show Stats" to see log analytics
+5. **Export Logs**: Click "Export" to download logs as JSON file
+6. **Clear Logs**: Click "Clear" to remove all logs (warning: cannot be undone)
+
+### Using Claude Code Agents
+
+The application includes intelligent agents to help with debugging and maintenance:
+
+#### Analyze Logs
+```
+/analyze-logs
+```
+Analyzes application logs to find errors, patterns, and performance issues.
+
+#### Update Documentation
+```
+/update-docs
+```
+Automatically updates documentation based on code changes and new features.
+
+#### Debug Issues
+```
+/debug-issue
+```
+Helps debug and fix issues found in logs or reported by users.
 
 ## Key Components
 
@@ -122,21 +192,31 @@ Example: `CORE-2025-11-13-01`
 
 ```
 invoice-generator/
+├── .claude/
+│   └── commands/
+│       ├── analyze-logs.md       # Log analysis agent
+│       ├── update-docs.md        # Documentation agent
+│       └── debug-issue.md        # Debugging agent
 ├── src/
 │   ├── components/
 │   │   ├── InvoicePreview.tsx    # Preview component (exact HTML copy)
-│   │   └── InvoiceEditor.tsx     # Editing forms
+│   │   ├── InvoiceEditor.tsx     # Editing forms
+│   │   ├── TemplateManager.tsx   # Template management UI
+│   │   └── LogViewer.tsx         # Log viewer component
 │   ├── types/
 │   │   └── invoice.types.ts      # TypeScript interfaces
 │   ├── utils/
 │   │   ├── pdfGenerator.ts       # PDF generation logic
 │   │   ├── storage.ts            # LocalStorage utilities
-│   │   └── invoiceCalculations.ts # Math calculations
+│   │   ├── invoiceCalculations.ts # Math calculations
+│   │   └── logger.ts             # Logging system
 │   ├── templates/
 │   │   └── defaultTemplate.ts    # Default invoice data
 │   ├── App.tsx                   # Main app component
 │   ├── main.tsx                  # Entry point
 │   └── index.css                 # Global styles
+├── LOGGING_GUIDE.md              # Comprehensive logging documentation
+├── README.md                     # This file
 ├── package.json
 ├── vite.config.ts
 ├── tailwind.config.js
