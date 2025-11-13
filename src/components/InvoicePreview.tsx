@@ -9,9 +9,9 @@ interface InvoicePreviewProps {
 
 export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF = false }) => {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('de-DE', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: invoice.payment.currency,
+      currency: 'EUR',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(amount);
@@ -45,7 +45,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
         }
 
         .invoice-container {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+          font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
           color: #1a1a1a;
           line-height: 1.4;
           background: white;
@@ -117,7 +117,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 0.8px;
-          color: #86868b;
+          color: #6c757d;
           margin-bottom: 8px;
           font-weight: 600;
         }
@@ -125,14 +125,14 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
         .info-section p {
           font-size: 11px;
           color: #1a1a1a;
-          line-height: 1.5;
+          line-height: 1.45;
         }
 
         .info-section strong {
           font-weight: 600;
           display: block;
           font-size: 13px;
-          margin-bottom: 6px;
+          margin-bottom: 5px;
           color: #0066cc;
         }
 
@@ -146,8 +146,9 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
         .detail-row {
           display: flex;
           justify-content: space-between;
+          align-items: flex-end;
           padding: 5px 0;
-          border-bottom: 1px solid #e5e5e7;
+          border-bottom: 0.5px solid #e5e5e7;
         }
 
         .detail-row:last-child {
@@ -156,7 +157,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
 
         .detail-label {
           font-size: 11px;
-          color: #86868b;
+          color: #6c757d;
           font-weight: 500;
         }
 
@@ -182,14 +183,16 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           font-size: 10px;
           text-transform: uppercase;
           letter-spacing: 0.5px;
-          color: #86868b;
-          font-weight: 600;
+          color: #6c757d;
+          font-weight: 700;
+          vertical-align: bottom;
         }
 
         .services-table td {
           padding: 14px 14px;
           font-size: 12px;
-          border-bottom: 1px solid #e5e5e7;
+          border-bottom: 0.5px solid #e5e5e7;
+          vertical-align: bottom;
         }
 
         .services-table tbody tr:last-child td {
@@ -209,6 +212,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
         .total-row {
           display: flex;
           justify-content: space-between;
+          align-items: flex-end;
           padding: 7px 14px;
           font-size: 12px;
         }
@@ -220,6 +224,11 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           margin-top: 8px;
           font-weight: 600;
           font-size: 15px;
+        }
+
+        .total-row.grand-total span:last-child {
+          font-size: 17px;
+          font-weight: 700;
         }
 
         .payment-info {
@@ -251,13 +260,13 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           font-size: 9px;
           text-transform: uppercase;
           letter-spacing: 0.5px;
-          color: #86868b;
-          margin-bottom: 4px;
+          color: #6c757d;
+          margin-bottom: 3px;
           font-weight: 600;
         }
 
         .payment-value {
-          font-size: 12px;
+          font-size: 11px;
           color: #1a1a1a;
           font-family: 'Courier New', monospace;
           font-weight: 500;
@@ -265,7 +274,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
 
         .reverse-charge-text {
           margin-top: 14px;
-          padding: 10px 14px;
+          padding: 8px 12px;
           background: #fff3e0;
           border-left: 3px solid #ff9800;
           border-radius: 4px;
@@ -278,9 +287,9 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
           background: #f5f5f7;
           padding: 14px 35px;
           text-align: center;
-          color: #86868b;
+          color: #6c757d;
           font-size: 10px;
-          border-top: 1px solid #e5e5e7;
+          border-top: 0.5px solid #e5e5e7;
           margin-top: auto;
         }
 
@@ -369,7 +378,7 @@ export const InvoicePreview: React.FC<InvoicePreviewProps> = ({ invoice, forPDF 
                 <td>
                   <strong>{service.description}</strong><br />
                   {service.additionalInfo && (
-                    <span style={{ fontSize: '11px', color: '#86868b' }}>{service.additionalInfo}</span>
+                    <span style={{ fontSize: '11px', color: '#6c757d' }}>{service.additionalInfo}</span>
                   )}
                 </td>
                 <td className="text-right">{service.quantity}</td>
